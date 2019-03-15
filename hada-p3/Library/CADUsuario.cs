@@ -8,7 +8,7 @@ namespace Library
 {
     public class CADUsuario
     {
-        private const string cadena = "0";
+        private const string constring = "0";
 
         public CADUsuario()
         {
