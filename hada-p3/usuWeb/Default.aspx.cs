@@ -9,12 +9,12 @@ namespace usuWeb
 {
     public partial class Default : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+
+        protected void Leer_Click(object sender, EventArgs e)
         {
 
         }
-
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void Leer_Primero_Click(object sender, EventArgs e)
         {
 
         }
@@ -23,11 +23,11 @@ namespace usuWeb
         {
 
         }
-
-        protected void Leer_Primero_Click(object sender, EventArgs e)
+        protected void Leer_Siguiente_Click(object sender, EventArgs e)
         {
 
         }
+
 
         protected void Crear_Click(object sender, EventArgs e)
         {

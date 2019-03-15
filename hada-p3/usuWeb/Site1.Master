@@ -10,7 +10,7 @@
     </asp:ContentPlaceHolder>
     <style>
         h1{text-align:center;
-        background-color: #00ffff;}
+           background-color: #00ffff;}
     </style>
 </head>
 <body>
