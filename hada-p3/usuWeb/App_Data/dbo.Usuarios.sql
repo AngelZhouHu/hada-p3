@@ -1,11 +1,11 @@
-﻿CREATE TABLE [dbo].[Table]
+﻿CREATE TABLE [dbo].[Usuarios]
 (
 
-	[Id] INT IDENTITY (1, 1) NOT NULL, 
+	[id] INT IDENTITY (1, 1) NOT NULL, 
     [nombre] NVARCHAR(32) NOT NULL, 
     [nif] NCHAR(16) NOT NULL, 
     [edad] INT NOT NULL,
-	PRIMARY KEY CLUSTERED ([Id] ASC),
+	PRIMARY KEY CLUSTERED ([id] ASC),
 	UNIQUE NONCLUSTERED ([nif] ASC)
 )
 
