@@ -19,25 +19,61 @@ namespace Library
         }
         public bool createUsuario(ENUsuario en)
         {
+            try
+            {
+                ENUsuario usu = en;
+                SqlConnection c = new SqlConnection(constring);
+                c.Open();
+                SqlCommand com = new SqlCommand("Insert Into Usuarios (nif, nombre, edad) VALUES ('" + usu.nifUsuario + "', '" + usu.nombreUsuario + "', '" + usu.edadUsuario + "'", c);
+                com.ExecuteNonQuery();
+                c.Close();
+                return true;
+            }
+            catch(Exception ex)
+            {
 
-            return false;
+                return false;
+            }
+
+               
+            
         }
         public bool readUsuario(ENUsuario en)
         {
-            SqlCommand com = new SqlCommand("Select * from usuarios", c);
-            SqlDataReader dr = com.ExecuteReader();
-            if (dr.Read())
+            try
             {
+                ENUsuario usu = en;
+                SqlConnection c = new SqlConnection(constring);
+                c.Open();
+                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios where nifUsuario="+ usu.nifUsuario, c);
+                com.ExecuteNonQuery();
+                c.Close();
                 return true;
             }
-            else
+            catch (Exception ex)
             {
+
                 return false;
             }
+
         }
         public bool readFirstUsuario(ENUsuario en)
         {
-            return false;
+            try
+            {
+                ENUsuario usu = en;
+                SqlConnection c = new SqlConnection(constring);
+                c.Open();
+                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios where id= 1", c);
+                com.ExecuteNonQuery();
+                c.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
         }
         public bool readNextUsuario(ENUsuario en)
         {
