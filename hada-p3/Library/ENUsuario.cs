@@ -12,13 +12,30 @@ namespace Library
         private string nombre;
         private int edad;
 
+        public string nifUsuario
+        {
+            get { return nif; }
+            set { nif = value; }
+        }
+        public string nombreUsuario
+        {
+            get { return nombre; }
+            set { nombre = value; }
+        }
+        public int edadUsuario
+        {
+            get { return edad; }
+            set { edad = value; }
+        }
         public ENUsuario()
         {
-
+           
         }
-        public ENUsuario(string nif, string nombre, string edad)
+        public ENUsuario(string nif, string nombre, int edad)
         {
-
+            nifUsuario = nif;
+            nombreUsuario = nombre;
+            edadUsuario = edad;
         }
         public bool createUsuario()
         {
