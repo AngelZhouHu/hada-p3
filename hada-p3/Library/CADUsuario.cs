@@ -11,10 +11,12 @@ namespace Library
     public class CADUsuario
     {
         private string constring;
+        private static int posicion;
      
         public CADUsuario()
         {
             constring = ConfigurationManager.ConnectionStrings["miconexion"].ToString();
+            posicion = 0;
 
         }
         public bool createUsuario(ENUsuario en)
@@ -29,10 +31,9 @@ namespace Library
                 c.Close();
                 return true;
             }
-            catch(Exception ex)
+            catch(SqlException ex)
             {
-
-                return false;
+                throw new CADException("no funciona", ex);
             }
 
                
@@ -40,52 +41,155 @@ namespace Library
         }
         public bool readUsuario(ENUsuario en)
         {
+            bool lectura = false;
+
+
             try
             {
                 ENUsuario usu = en;
                 SqlConnection c = new SqlConnection(constring);
                 c.Open();
-                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios where nifUsuario="+ usu.nifUsuario, c);
-                com.ExecuteNonQuery();
+                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios where nif="+ usu.nifUsuario +"", c);
+                SqlDataReader dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    en.nifUsuario= dr["nif"].ToString();
+                    en.nombreUsuario = dr["nombre"].ToString();
+                    en.edadUsuario = int.Parse(dr["edad"].ToString());
+                }
+
+
+
+                dr.Close();
                 c.Close();
                 return true;
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-
-                return false;
+                throw new CADException("no funciona", ex);
             }
 
         }
         public bool readFirstUsuario(ENUsuario en)
         {
+            bool lectura = false;
+
+
             try
             {
                 ENUsuario usu = en;
                 SqlConnection c = new SqlConnection(constring);
                 c.Open();
                 SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios where id= 1", c);
+                SqlDataReader dr = com.ExecuteReader();
+
+                dr.Read();
+                
+                en.nifUsuario = dr["nif"].ToString();
+                en.nombreUsuario = dr["nombre"].ToString();
+                en.edadUsuario = int.Parse(dr["edad"].ToString());
+                
+
+
+
+                dr.Close();
+
+                lectura = true;
+            }
+            catch (SqlException ex)
+            {
+                lectura = false;
+                throw new CADException("no funciona", ex);
+            }
+            finally
+            {
+                c.Close();
+            }
+            return lectura;
+        }
+        public bool readNextUsuario(ENUsuario en)
+        {
+            bool lectura = false;
+
+            try
+            {
+                posicion++;
+                ENUsuario usu = en;
+                SqlConnection c = new SqlConnection(constring);
+                c.Open();
+                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios limit" +posicion+"", c);
+                SqlDataReader dr = com.ExecuteReader();
+
+                dr.Read();
+
+                en.nifUsuario = dr["nif"].ToString();
+                en.nombreUsuario = dr["nombre"].ToString();
+                en.edadUsuario = int.Parse(dr["edad"].ToString());
+
+                dr.Close();
+
+                lectura = true;
+            }
+            catch (SqlException ex)
+            {
+                lectura = false;
+                throw new CADException("no funciona", ex);
+            }
+            finally
+            {
+                c.Close();
+            }
+            return lectura;
+        }
+        public bool readPrevUsuario(ENUsuario en)
+        {
+            bool lectura = false;
+            try
+            {
+                posicion--;
+                ENUsuario usu = en;
+                SqlConnection c = new SqlConnection(constring);
+                c.Open();
+                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios limit" + posicion + "", c);
+                SqlDataReader dr = com.ExecuteReader();
+
+                dr.Read();
+
+                en.nifUsuario = dr["nif"].ToString();
+                en.nombreUsuario = dr["nombre"].ToString();
+                en.edadUsuario = int.Parse(dr["edad"].ToString());
+
+                dr.Close();
+               
+                lectura = true;
+            }
+            catch (SqlException ex)
+            {
+                lectura = false;
+                throw new CADException("no funciona", ex);
+            }
+            finally
+            {
+                c.Close();
+            }
+            return lectura;
+        }
+        public bool updateUsuario(ENUsuario en)
+        {
+            try
+            {
+                ENUsuario usu = en;
+                SqlConnection c = new SqlConnection(constring);
+                c.Open();
+                SqlCommand com = new SqlCommand("Update Usuarios set nombre, edad where nif=" + usu.nifUsuario , c);
                 com.ExecuteNonQuery();
                 c.Close();
                 return true;
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-
-                return false;
+                throw new CADException("no funciona", ex);
             }
-        }
-        public bool readNextUsuario(ENUsuario en)
-        {
-            return false;
-        }
-        public bool readPrevUsuario(ENUsuario en)
-        {
-            return false;
-        }
-        public bool updateUsuario(ENUsuario en)
-        {
-            return false;
         }
         public bool deleteUsuario(ENUsuario en)
         {

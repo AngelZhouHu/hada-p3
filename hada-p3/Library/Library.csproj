@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CADException.cs" />
     <Compile Include="CADUsuario.cs" />
     <Compile Include="ENUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
