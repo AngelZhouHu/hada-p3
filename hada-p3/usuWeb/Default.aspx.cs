@@ -14,7 +14,7 @@ namespace usuWeb
         protected void Leer_Click(object sender, EventArgs e)
         {
             ENCliente en = new ENCliente();
-            en.nifUsuario() = TextBox.Text();
+            en.nifUsuario() = .Text();
             en.nombreUsuario() = Nombre.Text();
             en.edad() = Edad.Text();
 
