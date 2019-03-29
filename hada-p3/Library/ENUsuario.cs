@@ -29,7 +29,9 @@ namespace Library
         }
         public ENUsuario()
         {
-           
+            nifUsuario = "";
+            nombreUsuario = "";
+            edadUsuario = 0;
         }
         public ENUsuario(string nif, string nombre, int edad)
         {
@@ -39,31 +41,39 @@ namespace Library
         }
         public bool createUsuario()
         {
-            return false;
+            CADUsuario crear = new CADUsuario();
+            return crear.createUsuario(this);
+            
         }
         public bool readUsuario()
         {
-            return false;
+            CADUsuario lectura = new CADUsuario();
+            return lectura.createUsuario(this);
         }
         public bool readFirstUsuario()
         {
-            return false;
+            CADUsuario leerPrimero = new CADUsuario();
+            return leerPrimero.createUsuario(this);
         }
         public bool readNextUsuario()
         {
-            return false;
+            CADUsuario leerSiguiente = new CADUsuario();
+            return leerSiguiente.createUsuario(this);
         }
         public bool readPrevUsuario()
         {
-            return false;
+            CADUsuario leerPrevio = new CADUsuario();
+            return leerPrevio.createUsuario(this);
         }
         public bool updateUsuario()
         {
-            return false;
+            CADUsuario actualizar = new CADUsuario();
+            return actualizar.createUsuario(this);
         }
         public bool deleteUsuario()
         {
-            return false;
+            CADUsuario borrar = new CADUsuario();
+            return borrar.createUsuario(this);
         }
     }
 }

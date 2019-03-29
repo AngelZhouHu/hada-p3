@@ -1,0 +1,2 @@
+C:\Users\EPS\Desktop\hada-p3\hada-p3\usuWeb\obj\Debug\usuWeb.csprojAssemblyReference.cache
+C:\Users\EPS\Desktop\hada-p3\hada-p3\usuWeb\obj\Debug\usuWeb.csproj.CoreCompileInputs.cache

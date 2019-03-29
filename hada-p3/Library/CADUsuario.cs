@@ -43,11 +43,11 @@ namespace Library
         {
             bool lectura = false;
 
-
+            SqlConnection c = new SqlConnection(constring);
             try
             {
                 ENUsuario usu = en;
-                SqlConnection c = new SqlConnection(constring);
+                
                 c.Open();
                 SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios where nif="+ usu.nifUsuario +"", c);
                 SqlDataReader dr = com.ExecuteReader();
@@ -57,28 +57,31 @@ namespace Library
                     en.nombreUsuario = dr["nombre"].ToString();
                     en.edadUsuario = int.Parse(dr["edad"].ToString());
                 }
-
-
-
+                
                 dr.Close();
-                c.Close();
-                return true;
+
+                lectura = true;
             }
             catch (SqlException ex)
             {
+                lectura = false;
                 throw new CADException("no funciona", ex);
             }
+            finally
+            {
+                c.Close();
+            }
+            return lectura;
 
         }
         public bool readFirstUsuario(ENUsuario en)
         {
             bool lectura = false;
 
-
+            SqlConnection c = new SqlConnection(constring);
             try
             {
                 ENUsuario usu = en;
-                SqlConnection c = new SqlConnection(constring);
                 c.Open();
                 SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios where id= 1", c);
                 SqlDataReader dr = com.ExecuteReader();
@@ -88,10 +91,7 @@ namespace Library
                 en.nifUsuario = dr["nif"].ToString();
                 en.nombreUsuario = dr["nombre"].ToString();
                 en.edadUsuario = int.Parse(dr["edad"].ToString());
-                
-
-
-
+             
                 dr.Close();
 
                 lectura = true;
@@ -110,12 +110,11 @@ namespace Library
         public bool readNextUsuario(ENUsuario en)
         {
             bool lectura = false;
-
+            SqlConnection c = new SqlConnection(constring);
             try
             {
                 posicion++;
                 ENUsuario usu = en;
-                SqlConnection c = new SqlConnection(constring);
                 c.Open();
                 SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios limit" +posicion+"", c);
                 SqlDataReader dr = com.ExecuteReader();
@@ -144,11 +143,11 @@ namespace Library
         public bool readPrevUsuario(ENUsuario en)
         {
             bool lectura = false;
+            SqlConnection c = new SqlConnection(constring);
             try
             {
                 posicion--;
                 ENUsuario usu = en;
-                SqlConnection c = new SqlConnection(constring);
                 c.Open();
                 SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios limit" + posicion + "", c);
                 SqlDataReader dr = com.ExecuteReader();
@@ -176,24 +175,56 @@ namespace Library
         }
         public bool updateUsuario(ENUsuario en)
         {
+            bool cambiar = false;
+
+            SqlConnection c = new SqlConnection(constring);
+
             try
             {
                 ENUsuario usu = en;
-                SqlConnection c = new SqlConnection(constring);
                 c.Open();
                 SqlCommand com = new SqlCommand("Update Usuarios set nombre, edad where nif=" + usu.nifUsuario , c);
                 com.ExecuteNonQuery();
-                c.Close();
-                return true;
+
+
+                cambiar = true;
             }
             catch (SqlException ex)
             {
+                cambiar = false;
                 throw new CADException("no funciona", ex);
             }
+            finally
+            {
+                c.Close();
+            }
+            return cambiar;
         }
         public bool deleteUsuario(ENUsuario en)
         {
-            return false;
+            bool borrar = false;
+
+            SqlConnection c = new SqlConnection(constring);
+
+            try
+            {
+                ENUsuario usu = en;
+                c.Open();
+                SqlCommand com = new SqlCommand("Delete from Usuarios where nif=" + usu.nifUsuario, c);
+                com.ExecuteNonQuery();
+                
+                borrar = true;
+            }
+            catch (SqlException ex)
+            {
+                borrar = false;
+                throw new CADException("no funciona", ex);
+            }
+            finally
+            {
+                c.Close();
+            }
+            return borrar;
         }
 
     }
