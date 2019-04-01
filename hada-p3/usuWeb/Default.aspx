@@ -22,5 +22,4 @@
     <asp:Button ID="Actualizar" runat="server" Text="Actualizar" OnClick="Actualizar_Click" />
     <asp:Button ID="Borrar" runat="server" Text="Borrar" OnClick="Borrar_Click" />
 
-
 </asp:Content>
