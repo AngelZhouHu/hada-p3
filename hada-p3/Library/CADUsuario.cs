@@ -15,29 +15,41 @@ namespace Library
      
         public CADUsuario()
         {
-            constring = ConfigurationManager.ConnectionStrings["miconexion"].ToString();
+            constring =ConfigurationManager.ConnectionStrings["miconexion"].ToString();
             posicion = 0;
 
         }
         public bool createUsuario(ENUsuario en)
         {
+            bool crear = false;
+            ENUsuario usu = en;
+            SqlConnection c;
             try
             {
-                ENUsuario usu = en;
-                SqlConnection c = new SqlConnection(constring);
+                c = new SqlConnection(constring);
                 c.Open();
                 SqlCommand com = new SqlCommand("Insert Into Usuarios (nif, nombre, edad) VALUES ('" + usu.nifUsuario + "', '" + usu.nombreUsuario + "', '" + usu.edadUsuario + "'", c);
                 com.ExecuteNonQuery();
                 c.Close();
-                return true;
+
+
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
+                crear = false;
                 throw new CADException("no funciona", ex);
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine("User operation has failed. Error:{0}", ex.Message);
+            }
+            finally
+            {
+            }
+            return crear;
 
-               
-            
+
+
         }
         public bool readUsuario(ENUsuario en)
         {
