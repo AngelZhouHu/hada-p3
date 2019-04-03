@@ -23,10 +23,10 @@ namespace Library
         {
             bool crear = false;
             ENUsuario usu = en;
-            SqlConnection c;
+            SqlConnection c = new SqlConnection(constring);
             try
             {
-                c = new SqlConnection(constring);
+               
                 c.Open();
                 SqlCommand com = new SqlCommand("Insert Into Usuarios (nif, nombre, edad) VALUES ('" + usu.nifUsuario + "', '" + usu.nombreUsuario + "', '" + usu.edadUsuario + "'", c);
                 com.ExecuteNonQuery();
@@ -39,10 +39,7 @@ namespace Library
                 crear = false;
                 throw new CADException("no funciona", ex);
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine("User operation has failed. Error:{0}", ex.Message);
-            }
+       
             finally
             {
             }
