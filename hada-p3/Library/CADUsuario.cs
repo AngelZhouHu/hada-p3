@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Data.SqlClient;
 
-namespace Library
+namespace library
 {
     public class CADUsuario
     {
@@ -28,19 +28,20 @@ namespace Library
             {
                
                 c.Open();
-                SqlCommand com = new SqlCommand("insert into Usuarios (nif, nombre, edad) values ('" + usu.nifUsuario + "', '" + usu.nombreUsuario + "', '" + usu.edadUsuario + "')", c);
+                SqlCommand com = new SqlCommand("insert into Usuarios (nombre, nif, edad) values ('" + usu.nombreUsuario + "', '" + usu.nifUsuario + "'," + usu.edadUsuario + ")", c);
                 com.ExecuteNonQuery();
+                crear = true;
                 c.Close();
             }
-            catch (SqlException ex)
+            catch (SqlException sqlex)
             {
              
                 crear = false;
-                throw new CADException("no funciona", ex);
+                throw new CADException("no funciona", sqlex);
             }
             catch(Exception e)
             {
-                Console.WriteLine("ERROR");
+                Console.WriteLine("ERROR", e);
             }
        
             finally
@@ -62,7 +63,7 @@ namespace Library
             {
                 c.Open();
 
-                SqlCommand com = new SqlCommand("Select nif, nombre, edad from Usuarios where nif="+ usu.nifUsuario +"", c);
+                SqlCommand com = new SqlCommand("select * from Usuarios where nif='"+ usu.nifUsuario+"'", c);
                 SqlDataReader dr = com.ExecuteReader();
                 dr.Read();
                    
@@ -196,7 +197,7 @@ namespace Library
             {
                 ENUsuario usu = en;
                 c.Open();
-                SqlCommand com = new SqlCommand("Update Usuarios set nombre, edad where nif=" + usu.nifUsuario , c);
+                SqlCommand com = new SqlCommand("Update Usuarios set nombre ='" + usu.nombreUsuario + "' , edad = " +usu.edadUsuario + " where nif=" + usu.nifUsuario , c);
                 com.ExecuteNonQuery();
 
 

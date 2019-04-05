@@ -48,32 +48,32 @@ namespace library
         public bool readUsuario()
         {
             CADUsuario lectura = new CADUsuario();
-            return lectura.createUsuario(this);
+            return lectura.readUsuario(this);
         }
         public bool readFirstUsuario()
         {
             CADUsuario leerPrimero = new CADUsuario();
-            return leerPrimero.createUsuario(this);
+            return leerPrimero.readFirstUsuario(this);
         }
         public bool readNextUsuario()
         {
             CADUsuario leerSiguiente = new CADUsuario();
-            return leerSiguiente.createUsuario(this);
+            return leerSiguiente.readNextUsuario(this);
         }
         public bool readPrevUsuario()
         {
             CADUsuario leerPrevio = new CADUsuario();
-            return leerPrevio.createUsuario(this);
+            return leerPrevio.readPrevUsuario(this);
         }
         public bool updateUsuario()
         {
             CADUsuario actualizar = new CADUsuario();
-            return actualizar.createUsuario(this);
+            return actualizar.updateUsuario(this);
         }
         public bool deleteUsuario()
         {
             CADUsuario borrar = new CADUsuario();
-            return borrar.createUsuario(this);
+            return borrar.deleteUsuario(this);
         }
     }
 }
