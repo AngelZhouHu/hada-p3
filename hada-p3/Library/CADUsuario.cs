@@ -11,12 +11,10 @@ namespace library
     public class CADUsuario
     {
         private string constring;
-        private static int posicion;
      
         public CADUsuario()
         {
             constring =ConfigurationManager.ConnectionStrings["miconexion"].ToString();
-            posicion = 0;
 
         }
         public bool createUsuario(ENUsuario en)
@@ -49,9 +47,6 @@ namespace library
                 c.Close();
             }
             return crear;
-
-
-
         }
         public bool readUsuario(ENUsuario en)
         {
@@ -65,13 +60,16 @@ namespace library
 
                 SqlCommand com = new SqlCommand("select * from Usuarios where nif='"+ usu.nifUsuario+"'", c);
                 SqlDataReader dr = com.ExecuteReader();
-                dr.Read();
-                   
-                en.nifUsuario= dr["nif"].ToString();
-                en.nombreUsuario = dr["nombre"].ToString();
-                en.edadUsuario = int.Parse(dr["edad"].ToString());
-                
-                
+                if (dr.Read())
+                {
+                    en.nifUsuario = dr["nif"].ToString();
+                    en.nombreUsuario = dr["nombre"].ToString();
+                    en.edadUsuario = int.Parse(dr["edad"].ToString());
+                }
+                else
+                {
+                    return false;
+                }
                 dr.Close();
 
                 lectura = true;
@@ -97,15 +95,15 @@ namespace library
             {
                 ENUsuario usu = en;
                 c.Open();
-                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios where id= 1", c);
+                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios where id= '1'", c);
                 SqlDataReader dr = com.ExecuteReader();
 
-                dr.Read();
-                
-                en.nifUsuario = dr["nif"].ToString();
-                en.nombreUsuario = dr["nombre"].ToString();
-                en.edadUsuario = int.Parse(dr["edad"].ToString());
-             
+                if (dr.Read())
+                {
+                    en.nifUsuario = dr["nif"].ToString();
+                    en.nombreUsuario = dr["nombre"].ToString();
+                    en.edadUsuario = int.Parse(dr["edad"].ToString());
+                }
                 dr.Close();
 
                 lectura = true;
@@ -127,11 +125,11 @@ namespace library
             SqlConnection c = new SqlConnection(constring);
             try
             {
-                posicion++;
                 ENUsuario usu = en;
                 c.Open();
-                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios limit" +posicion+"", c);
+                SqlCommand com = new SqlCommand("select * from Usuarios where id > (select id from Usuarios where nif ='"+ en.nifUsuario + "')", c);
                 SqlDataReader dr = com.ExecuteReader();
+
 
                 dr.Read();
 
@@ -160,10 +158,9 @@ namespace library
             SqlConnection c = new SqlConnection(constring);
             try
             {
-                posicion--;
                 ENUsuario usu = en;
                 c.Open();
-                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios limit" + posicion + "", c);
+                SqlCommand com = new SqlCommand("select * from Usuarios where id < (select id from Usuarios where nif ='" + en.nifUsuario + "')  order by id desc", c);
                 SqlDataReader dr = com.ExecuteReader();
 
                 dr.Read();
@@ -192,15 +189,12 @@ namespace library
             bool cambiar = false;
 
             SqlConnection c = new SqlConnection(constring);
-
+            ENUsuario usu = en;
             try
             {
-                ENUsuario usu = en;
                 c.Open();
-                SqlCommand com = new SqlCommand("Update Usuarios set nombre ='" + usu.nombreUsuario + "' , edad = " +usu.edadUsuario + " where nif=" + usu.nifUsuario , c);
+                SqlCommand com = new SqlCommand("update Usuarios set Nombre = '" + usu.nombreUsuario + "', edad =  " + usu.edadUsuario + "  where nif = '" + usu.nifUsuario + "'" , c);
                 com.ExecuteNonQuery();
-
-
                 cambiar = true;
             }
             catch (SqlException ex)
@@ -219,14 +213,12 @@ namespace library
             bool borrar = false;
 
             SqlConnection c = new SqlConnection(constring);
-
+            ENUsuario usu = en;
             try
             {
-                ENUsuario usu = en;
                 c.Open();
-                SqlCommand com = new SqlCommand("Delete from Usuarios where nif=" + usu.nifUsuario, c);
+                SqlCommand com = new SqlCommand("Delete from Usuarios where nif= '" + usu.nifUsuario + "'", c);
                 com.ExecuteNonQuery();
-                
                 borrar = true;
             }
             catch (SqlException ex)
