@@ -33,15 +33,12 @@ namespace library
             }
             catch (SqlException sqlex)
             {
-             
-                crear = false;
-                throw new CADException("no funciona", sqlex);
+                throw new CADException("El usuario no se ha podido crear", sqlex);
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
-                Console.WriteLine("ERROR", e);
+                Console.WriteLine("User operation has failed. Error: {0}", ex);
             }
-       
             finally
             {
                 c.Close();
@@ -76,8 +73,11 @@ namespace library
             }
             catch (SqlException ex)
             {
-                lectura = false;
-                throw new CADException("no funciona", ex);
+                throw new CADException("El usuario no existe en la base de datos", ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("User operation has failed. Error: {0}", ex);
             }
             finally
             {
@@ -111,7 +111,11 @@ namespace library
             catch (SqlException ex)
             {
                 lectura = false;
-                throw new CADException("no funciona", ex);
+                throw new CADException("No hay usuarios en la base de datos", ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("User operation has failed. Error: {0}", ex);
             }
             finally
             {
@@ -143,8 +147,11 @@ namespace library
             }
             catch (SqlException ex)
             {
-                lectura = false;
-                throw new CADException("no funciona", ex);
+                throw new CADException("No existe un usuario siguiente", ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("User operation has failed. Error: {0}", ex);
             }
             finally
             {
@@ -176,7 +183,11 @@ namespace library
             catch (SqlException ex)
             {
                 lectura = false;
-                throw new CADException("no funciona", ex);
+                throw new CADException("No existe un usuario anterior", ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("User operation has failed. Error: {0}", ex);
             }
             finally
             {
@@ -200,7 +211,11 @@ namespace library
             catch (SqlException ex)
             {
                 cambiar = false;
-                throw new CADException("no funciona", ex);
+                throw new CADException("No se ha podudo actualizar el usuario", ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("User operation has failed. Error: {0}", ex);
             }
             finally
             {
@@ -224,7 +239,11 @@ namespace library
             catch (SqlException ex)
             {
                 borrar = false;
-                throw new CADException("no funciona", ex);
+                throw new CADException("No se ha podido borrar el usuario", ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("User operation has failed. Error: {0}", ex);
             }
             finally
             {
