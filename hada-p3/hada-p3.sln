@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "usuWeb", "usuWeb\usuWeb.csproj", "{82192C6F-C236-4A24-96D6-1456672B872A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{BA300F90-6838-4E79-8211-B15FDF64EFF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "library", "Library\library.csproj", "{BA300F90-6838-4E79-8211-B15FDF64EFF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
