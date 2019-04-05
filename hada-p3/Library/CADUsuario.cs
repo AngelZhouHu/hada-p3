@@ -28,20 +28,24 @@ namespace Library
             {
                
                 c.Open();
-                SqlCommand com = new SqlCommand("Insert Into Usuarios (nif, nombre, edad) VALUES ('" + usu.nifUsuario + "', '" + usu.nombreUsuario + "', '" + usu.edadUsuario + "'", c);
+                SqlCommand com = new SqlCommand("insert into Usuarios (nif, nombre, edad) values ('" + usu.nifUsuario + "', '" + usu.nombreUsuario + "', '" + usu.edadUsuario + "')", c);
                 com.ExecuteNonQuery();
                 c.Close();
-
-
             }
             catch (SqlException ex)
             {
+             
                 crear = false;
                 throw new CADException("no funciona", ex);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("ERROR");
             }
        
             finally
             {
+                c.Close();
             }
             return crear;
 
@@ -53,19 +57,19 @@ namespace Library
             bool lectura = false;
 
             SqlConnection c = new SqlConnection(constring);
+            ENUsuario usu = en;
             try
             {
-                ENUsuario usu = en;
-                
                 c.Open();
-                SqlCommand com = new SqlCommand("Select nif, nombre, edad From Usuarios where nif="+ usu.nifUsuario +"", c);
+
+                SqlCommand com = new SqlCommand("Select nif, nombre, edad from Usuarios where nif="+ usu.nifUsuario +"", c);
                 SqlDataReader dr = com.ExecuteReader();
-                while (dr.Read())
-                {
-                    en.nifUsuario= dr["nif"].ToString();
-                    en.nombreUsuario = dr["nombre"].ToString();
-                    en.edadUsuario = int.Parse(dr["edad"].ToString());
-                }
+                dr.Read();
+                   
+                en.nifUsuario= dr["nif"].ToString();
+                en.nombreUsuario = dr["nombre"].ToString();
+                en.edadUsuario = int.Parse(dr["edad"].ToString());
+                
                 
                 dr.Close();
 
